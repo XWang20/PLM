@@ -14,6 +14,10 @@ class RobertaForNextSentencePrediction(RobertaPreTrainedModel):
         super().__init__(config)
         self.roberta = RobertaModel(config)
         self.cls = RobertaOnlyNSPHead(config)
+        self.roberta.config.type_vocab_size = 2
+        single_emb = self.roberta.embeddings.token_type_embeddings
+        self.roberta.embeddings.token_type_embeddings = torch.nn.Embedding(2, single_emb.embedding_dim)
+        self.roberta.embeddings.token_type_embeddings.weight = torch.nn.Parameter(single_emb.weight.repeat([2, 1]))
 
         self.init_weights()
 
