@@ -26,7 +26,7 @@ architecture: 和roberta相同
 
 ## Next Sentence Prediction
 
-architecture: 每个句子中的第一个 token [CLS] 作为作为输入vector，外接一个分类器，用于判断两句子是否具有目标关系。(similar to BERT nsp)
+architecture: 和 BERT 中的 NextSentencePrediction 类似。
 
 1. [RobertaForNextSentencePrediction.py](RobertaForNextSentencePrediction.py) 中定义了基于 Roberta 的 NSP model。改编自[BertForNextSentencePrediction
 ](https://huggingface.co/transformers/_modules/transformers/models/bert/modeling_bert.html#BertForNextSentencePrediction)。和BERT不同的是，增加了一层 input embeddings 作为输入，增加的具体原因见2。
