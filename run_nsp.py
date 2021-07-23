@@ -155,6 +155,11 @@ def main():
         use_auth_token=True if model_args.use_auth_token else None,
     )
 
+    model.roberta.config.type_vocab_size = 2
+    single_emb = model.roberta.embeddings.token_type_embeddings
+    model.roberta.embeddings.token_type_embeddings = torch.nn.Embedding(2, single_emb.embedding_dim)
+    model.roberta.embeddings.token_type_embeddings.weight = torch.nn.Parameter(single_emb.weight.repeat([2, 1]))
+
     model.resize_token_embeddings(len(tokenizer))
 
     # Get the datasets

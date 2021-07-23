@@ -29,7 +29,7 @@ architecture: 和roberta相同
 architecture: 和 BERT 中的 NextSentencePrediction 类似。
 
 1. [RobertaForNextSentencePrediction.py](RobertaForNextSentencePrediction.py) 中定义了基于 Roberta 的 NSP model。改编自[BertForNextSentencePrediction
-](https://huggingface.co/transformers/_modules/transformers/models/bert/modeling_bert.html#BertForNextSentencePrediction)。和BERT不同的是，增加了一层 input embeddings 作为输入，增加的具体原因见2。
+](https://huggingface.co/transformers/_modules/transformers/models/bert/modeling_bert.html#BertForNextSentencePrediction)。
 
 2. [tokenizer.py](tokenizer.py) 中定义了 tokenizer，和原 [RobertaTokenizer](https://huggingface.co/transformers/model_doc/roberta.html#transformers.RobertaTokenizer) 不同的地方在`create_token_type_ids_from_sequences`函数。
 
@@ -37,4 +37,4 @@ BERT输入时的 input embeddings = token embeddings + segment embeddings + posi
 
 由于我们的 NSP model 需要考虑 segment embeddings，故在 `create_token_type_ids_from_sequences` 函数中将修改为`[前句]*0 + [后句]*1`的形式。
 
-3. [run_nsp.py](run_nsp.py)：和 [run_mlm.py](https://github.com/huggingface/transformers/blob/master/examples/pytorch/language-modeling/run_mlm.py) 类似，不多阐述。
+3. [run_nsp.py](run_nsp.py)：和 [run_mlm.py](https://github.com/huggingface/transformers/blob/master/examples/pytorch/language-modeling/run_mlm.py) 类似，和原run_mlm不同的是，增加了一层 input embeddings 作为输入，增加的具体原因同2。
